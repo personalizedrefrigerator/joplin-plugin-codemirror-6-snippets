@@ -41,10 +41,11 @@
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.2.2",
 		"webpack": "^5.88.2",
-		"webpack-cli": "^5.1.4"
+		"webpack-cli": "^5.1.4",
+		"@codemirror/autocomplete": "6.12.0",
+		"@codemirror/state": "6.4.0",
+		"@codemirror/view": "6.23.0",
+		"@joplin/lib": "~2.9"
 	},
-	"dependencies": {
-		"@js-draw/material-icons": "1.16.1",
-		"js-draw": "1.16.1"
-	}
+	"dependencies": {}
 }

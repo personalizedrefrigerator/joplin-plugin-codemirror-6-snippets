@@ -1,35 +1,23 @@
-import CodeMirror = require('codemirror');
+import { autocompletion, snippetCompletion } from '@codemirror/autocomplete';
+import { EditorState } from '@codemirror/state';
 
-export default (_context: { contentScriptId: string }) => {
+export default (pluginContext: { contentScriptId: string; postMessage: any }) => {
 	return {
-		plugin: (codeMirror: typeof CodeMirror, _options: any) => {
-			codeMirror.defineExtension('js-draw--isCodeMirrorActive', () => {
-				return 'active';
+		plugin: async (codeMirror: any, _options: any) => {
+			if (!codeMirror.cm6) {
+				throw new Error('Only CodeMirror 6 is supported');
+			}
+
+			const snippetData = await pluginContext.postMessage('getSnippets');
+			const snippets = snippetData.map((snippet: any) => {
+				return snippetCompletion(snippet.source, { label: snippet.label });
 			});
 
-			// Selects `target`, moves the cursor to that selection, and deletes the selected
-			// text.
-			// This is useful for inserting text in one editor mode, then deleting that text
-			// to sync the cursor position.
-			codeMirror.defineExtension('js-draw--cmSelectAndDelete', function (target: string) {
-				const searchCursor = this.getSearchCursor(target, 0, {
-					multiline: 'disable',
-				});
-				const foundNext = searchCursor.findNext();
-				const targetCursorLoc = searchCursor.from();
-
-				if (!foundNext) {
-					return false;
-				}
-
-				searchCursor.replace('');
-
-				const selectionRanges = [{ anchor: targetCursorLoc, head: targetCursorLoc }];
-				this.setSelections(selectionRanges, 0);
-
-				return foundNext;
-			});
+			codeMirror.addExtension([
+				autocompletion(),
+				EditorState.languageData.of(() => [{ autocomplete: snippets }]),
+			]);
 		},
-		codeMirrorResources: ['addon/search/searchcursor.js'],
+		codeMirrorResources: [],
 	};
 };

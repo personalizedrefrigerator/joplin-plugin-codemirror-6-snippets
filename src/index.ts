@@ -52,8 +52,14 @@ joplin.plugins.register({
 				});
 			} else if (message === 'getConfiguration') {
 				const configNoteId = noteLinkToId(await joplin.settings.value(snippetsNoteIdKey));
+
+				const defaultConfig: PluginConfig = {
+					keymap: {},
+					userSnippets: [],
+				};
+
 				if (!configNoteId) {
-					return [];
+					return defaultConfig;
 				}
 
 				const configNote = await joplin.data.get(['notes', configNoteId], { fields: 'body' });
@@ -62,7 +68,7 @@ joplin.plugins.register({
 					alert(
 						`No snippet note found with ID ${configNoteId}. Make sure that the setting is correct.`,
 					);
-					return [];
+					return defaultConfig;
 				}
 
 				const noteBody: string = configNote?.body ?? '';

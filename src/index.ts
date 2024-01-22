@@ -1,6 +1,8 @@
 import joplin from 'api';
-import { ContentScriptType, SettingItemType, SettingStorage } from 'api/types';
+import { ContentScriptType, MenuItemLocation, SettingItemType, SettingStorage } from 'api/types';
 import localization from './localization';
+import noteLinkToId from './util/noteLinkToId';
+import noteBodyToSnippets from './util/noteBodyToSnippets';
 
 const snippetsNoteIdKey = 'snippets-note-id';
 
@@ -26,32 +28,6 @@ const registerAndApplySettings = async () => {
 			storage: SettingStorage.File,
 		},
 	});
-
-	// await joplin.settings.onChange((_event) => {
-	// 	void applySettings();
-	// });
-
-	// await applySettings();
-};
-
-const getSnippetNoteId = async () => {
-	const snippetNoteIdOrLink = await joplin.settings.value(snippetsNoteIdKey);
-
-	if (!snippetNoteIdOrLink) {
-		return null;
-	}
-
-	const idMatch = /^\s*:\/([a-zA-Z0-9]+)\s*$/.exec(snippetNoteIdOrLink);
-	if (idMatch) {
-		return idMatch[1];
-	}
-
-	const markdownLinkMatch = /^\s*\[.*\]\(:\/([a-zA-Z0-9]+)\)\s*$/.exec(snippetNoteIdOrLink);
-	if (markdownLinkMatch) {
-		return markdownLinkMatch[1];
-	}
-
-	return snippetNoteIdOrLink;
 };
 
 joplin.plugins.register({
@@ -65,9 +41,15 @@ joplin.plugins.register({
 			'./contentScripts/codeMirror.js',
 		);
 
+		let reloadSnippets = () => {};
+
 		joplin.contentScripts.onMessage(codeMirrorContentScriptId, async (message: any) => {
-			if (message === 'getSnippets') {
-				const snippetNoteId = await getSnippetNoteId();
+			if (message === 'registerSnippetReloadCallback') {
+				await new Promise<void>((resolve) => {
+					reloadSnippets = resolve;
+				});
+			} else if (message === 'getSnippets') {
+				const snippetNoteId = noteLinkToId(await joplin.settings.value(snippetsNoteIdKey));
 				if (!snippetNoteId) {
 					return [];
 				}
@@ -76,34 +58,35 @@ joplin.plugins.register({
 
 				if (!snippetNote) {
 					alert(
-						'No snippet note found with ID ' +
-							snippetNoteId +
-							'. Make sure that the setting is correct.',
+						`No snippet note found with ID ${snippetNoteId}. Make sure that the setting is correct.`,
 					);
 					return [];
 				}
 
 				const noteBody: string = snippetNote?.body ?? '';
-				return noteBody
-					.split('\n')
-					.filter((line) => !!line)
-					.filter((line) => !line.startsWith('#'))
-					.filter((line) => !line.startsWith('```'))
-					.map((line) => {
-						const match = /^([^:]*): (.+)$/.exec(line);
 
-						if (!match) {
-							return { source: line, label: 'Unlabeled' };
-						}
-
-						return {
-							source: match[2],
-							label: match[1],
-						};
-					});
+				try {
+					return noteBodyToSnippets(noteBody);
+				} catch (error) {
+					alert('Error loading snippets: \n' + error);
+				}
 			}
 
 			return null;
 		});
+
+		await joplin.commands.register({
+			name: 'reloadSnippets',
+			label: 'Reload snippets',
+			execute: async () => {
+				reloadSnippets();
+			},
+		});
+
+		await joplin.views.menuItems.create(
+			'reloadSnippetsMenuItem',
+			'reloadSnippets',
+			MenuItemLocation.Edit,
+		);
 	},
 });

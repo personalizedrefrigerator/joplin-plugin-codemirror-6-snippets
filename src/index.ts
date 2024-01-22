@@ -3,6 +3,8 @@ import { ContentScriptType, MenuItemLocation, SettingItemType, SettingStorage } 
 import localization from './localization';
 import noteLinkToId from './util/noteLinkToId';
 import noteBodyToSnippets from './util/noteBodyToSnippets';
+import keybindingsFromNoteBody from './util/keybindingsFromNoteBody';
+import { PluginConfig, SnippetSpec } from './types';
 
 const snippetsNoteIdKey = 'snippets-note-id';
 
@@ -48,28 +50,43 @@ joplin.plugins.register({
 				await new Promise<void>((resolve) => {
 					reloadSnippets = resolve;
 				});
-			} else if (message === 'getSnippets') {
-				const snippetNoteId = noteLinkToId(await joplin.settings.value(snippetsNoteIdKey));
-				if (!snippetNoteId) {
+			} else if (message === 'getConfiguration') {
+				const configNoteId = noteLinkToId(await joplin.settings.value(snippetsNoteIdKey));
+				if (!configNoteId) {
 					return [];
 				}
 
-				const snippetNote = await joplin.data.get(['notes', snippetNoteId], { fields: 'body' });
+				const configNote = await joplin.data.get(['notes', configNoteId], { fields: 'body' });
 
-				if (!snippetNote) {
+				if (!configNote) {
 					alert(
-						`No snippet note found with ID ${snippetNoteId}. Make sure that the setting is correct.`,
+						`No snippet note found with ID ${configNoteId}. Make sure that the setting is correct.`,
 					);
 					return [];
 				}
 
-				const noteBody: string = snippetNote?.body ?? '';
+				const noteBody: string = configNote?.body ?? '';
+
+				let snippets: SnippetSpec[] = [];
+				let keybindings: Record<string, string> = {};
 
 				try {
-					return noteBodyToSnippets(noteBody);
+					keybindings = keybindingsFromNoteBody(noteBody);
+				} catch (error) {
+					alert('Error loading keybindings: \n' + error);
+				}
+
+				try {
+					snippets = noteBodyToSnippets(noteBody);
 				} catch (error) {
 					alert('Error loading snippets: \n' + error);
 				}
+
+				const config: PluginConfig = {
+					keymap: keybindings,
+					userSnippets: snippets,
+				};
+				return config;
 			}
 
 			return null;

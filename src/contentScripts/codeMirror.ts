@@ -1,7 +1,58 @@
-import { acceptCompletion, autocompletion, snippetCompletion } from '@codemirror/autocomplete';
-import { EditorState, Compartment } from '@codemirror/state';
-import { EditorView, keymap } from '@codemirror/view';
-import { SnippetSpec } from 'src/types';
+import {
+	acceptCompletion,
+	autocompletion,
+	closeCompletion,
+	moveCompletionSelection,
+	snippetCompletion,
+	startCompletion,
+} from '@codemirror/autocomplete';
+import { EditorState, Compartment, Prec } from '@codemirror/state';
+import { Command, EditorView, KeyBinding, keymap } from '@codemirror/view';
+import { PluginConfig } from '../types';
+
+const keymapFromConfig = (config: PluginConfig) => {
+	const commandNameToCommand: Record<string, Command> = {
+		acceptCompletion: acceptCompletion,
+		startCompletion: startCompletion,
+		closeCompletion: closeCompletion,
+		nextSuggestion: moveCompletionSelection(true),
+		previousSuggestion: moveCompletionSelection(false),
+		nextSuggestionPage: moveCompletionSelection(true, 'page'),
+		previousSuggestionPage: moveCompletionSelection(false, 'page'),
+	};
+	const defaultMapping = {
+		acceptCompletion: ['Tab', 'Enter'],
+		startCompletion: ['Ctrl-Space'],
+		nextSuggestion: ['ArrowDown'],
+		previousSuggestion: ['ArrowUp'],
+		nextSuggestionPage: ['PageDown'],
+		previousSuggestionPage: ['PageUp'],
+		closeCompletion: ['Escape'],
+	};
+
+	const bindings: KeyBinding[] = [];
+
+	const keymapData = { ...defaultMapping, ...config.keymap };
+
+	for (const [commandName, mappings] of Object.entries(keymapData)) {
+		if (!Array.isArray(mappings)) {
+			console.warn('User snippet config: Mappings for', commandName, 'must be an array.');
+			continue;
+		}
+
+		if (!Object.prototype.hasOwnProperty.call(commandNameToCommand, commandName)) {
+			console.warn('User snippet config: Unknown command', commandName);
+			continue;
+		}
+
+		for (const key of mappings) {
+			const run = commandNameToCommand[commandName];
+			bindings.push({ key, run });
+		}
+	}
+
+	return [Prec.high(keymap.of(bindings))];
+};
 
 export default (pluginContext: { contentScriptId: string; postMessage: any; onMessage: any }) => {
 	return {
@@ -13,32 +64,30 @@ export default (pluginContext: { contentScriptId: string; postMessage: any; onMe
 			const editor = codeMirror.cm6 as EditorView;
 
 			const extensions = new Compartment();
-			codeMirror.addExtension([
-				autocompletion(),
-				keymap.of([{ key: 'Tab', run: acceptCompletion }]),
+			codeMirror.addExtension([autocompletion({ defaultKeymap: false }), extensions.of([])]);
 
-				extensions.of([]),
-			]);
+			const loadConfig = async () => {
+				const config: PluginConfig = await pluginContext.postMessage('getConfiguration');
 
-			const loadSnippets = async () => {
-				const snippetData: SnippetSpec[] = await pluginContext.postMessage('getSnippets');
+				const snippetData = config.userSnippets;
 				const snippets = snippetData.map((snippet) => {
-					return snippetCompletion(snippet.snippet, { label: snippet.label });
+					return snippetCompletion(snippet.snippet, { label: snippet.label, info: snippet.info });
 				});
 
 				editor.dispatch({
 					effects: [
 						extensions.reconfigure([
+							keymapFromConfig(config),
 							EditorState.languageData.of(() => [{ autocomplete: snippets }]),
 						]),
 					],
 				});
 
 				await pluginContext.postMessage('registerSnippetReloadCallback');
-				loadSnippets();
+				loadConfig();
 			};
 
-			loadSnippets();
+			loadConfig();
 		},
 		codeMirrorResources: [],
 	};

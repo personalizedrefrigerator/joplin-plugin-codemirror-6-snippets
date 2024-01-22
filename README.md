@@ -84,7 +84,6 @@ For example,
 Keybinding overrides go at the beginning of the note.
 
 keybindings:
-
 ```json
 {
 	"acceptCompletion": ["Tab"],
@@ -116,7 +115,6 @@ To disable a command, map it to the empty array:
 
 ````markdown
 keybindings:
-
 ```json
 {
 	"closeCompletion": []

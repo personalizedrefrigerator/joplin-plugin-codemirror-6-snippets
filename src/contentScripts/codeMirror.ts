@@ -1,9 +1,13 @@
 import {
 	acceptCompletion,
 	autocompletion,
+	clearSnippet,
 	closeCompletion,
 	moveCompletionSelection,
+	nextSnippetField,
+	prevSnippetField,
 	snippetCompletion,
+	snippetKeymap,
 	startCompletion,
 } from '@codemirror/autocomplete';
 import { EditorState, Compartment, Prec } from '@codemirror/state';
@@ -11,14 +15,19 @@ import { Command, EditorView, KeyBinding, keymap } from '@codemirror/view';
 import { PluginConfig } from '../types';
 
 const keymapFromConfig = (config: PluginConfig) => {
-	const commandNameToCommand: Record<string, Command> = {
-		acceptCompletion: acceptCompletion,
-		startCompletion: startCompletion,
-		closeCompletion: closeCompletion,
+	const commandNameToCompletionCommand: Record<string, Command> = {
+		acceptCompletion,
+		startCompletion,
+		closeCompletion,
 		nextSuggestion: moveCompletionSelection(true),
 		previousSuggestion: moveCompletionSelection(false),
 		nextSuggestionPage: moveCompletionSelection(true, 'page'),
 		previousSuggestionPage: moveCompletionSelection(false, 'page'),
+	};
+	const commandNameToSnippetCommand: Record<string, Command> = {
+		nextSnippetField,
+		prevSnippetField,
+		clearSnippet,
 	};
 	const defaultMapping = {
 		acceptCompletion: ['Tab', 'Enter'],
@@ -28,9 +37,14 @@ const keymapFromConfig = (config: PluginConfig) => {
 		nextSuggestionPage: ['PageDown'],
 		previousSuggestionPage: ['PageUp'],
 		closeCompletion: ['Escape'],
+
+		nextSnippetField: ['Tab'],
+		prevSnippetField: ['Shift-Tab'],
+		clearSnippet: ['Escape'],
 	};
 
-	const bindings: KeyBinding[] = [];
+	const autocompleteBindings: KeyBinding[] = [];
+	const snippetBindings: KeyBinding[] = [];
 
 	const keymapData = { ...defaultMapping, ...config.keymap };
 
@@ -40,18 +54,32 @@ const keymapFromConfig = (config: PluginConfig) => {
 			continue;
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(commandNameToCommand, commandName)) {
+		const isSnippetBinding = Object.prototype.hasOwnProperty.call(
+			commandNameToSnippetCommand,
+			commandName,
+		);
+		const isCompletionBinding = Object.prototype.hasOwnProperty.call(
+			commandNameToCompletionCommand,
+			commandName,
+		);
+
+		if (!isSnippetBinding && !isCompletionBinding) {
 			console.warn('User snippet config: Unknown command', commandName);
 			continue;
 		}
 
 		for (const key of mappings) {
-			const run = commandNameToCommand[commandName];
-			bindings.push({ key, run });
+			if (isSnippetBinding) {
+				const run = commandNameToSnippetCommand[commandName];
+				autocompleteBindings.push({ key, run });
+			} else {
+				const run = commandNameToCompletionCommand[commandName];
+				autocompleteBindings.push({ key, run });
+			}
 		}
 	}
 
-	return [Prec.high(keymap.of(bindings))];
+	return [Prec.high(keymap.of(autocompleteBindings)), snippetKeymap.of(snippetBindings)];
 };
 
 export default (pluginContext: { contentScriptId: string; postMessage: any; onMessage: any }) => {

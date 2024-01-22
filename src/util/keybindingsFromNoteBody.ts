@@ -21,6 +21,12 @@ const keybindingsFromNoteBody = (body: string): Record<string, string> => {
 		if (line.match(/^keybindings:?\s*$/i)) {
 			lastLineWasKeybindingsHeader = true;
 		} else if (lastLineWasKeybindingsHeader) {
+			// Allow empty lines just after the keybindings header
+			// before the keybindings code block.
+			if (line.trim() === '') {
+				continue;
+			}
+
 			// If the line after
 			//   keybindings:
 			// isn't a code block, stop.

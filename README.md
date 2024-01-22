@@ -5,7 +5,7 @@ This plugin does two things:
 1. exposes CodeMirror 6's built-in support for snippets
 2. enables CodeMirror 6's built-in autocomplete support.
 
-## Software requirements
+## Version requirements
 
 - Requires Joplin 2.14.6 or greater.
 - The beta CodeMirror 6 editor must be enabled.

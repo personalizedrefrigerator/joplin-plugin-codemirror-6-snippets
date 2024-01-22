@@ -17,6 +17,7 @@
 	"files": [
 		"publish"
 	],
+	"homepage": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
 	"devDependencies": {
 		"@types/codemirror": "5.60.8",
 		"@types/fs-extra": "^11.0.1",

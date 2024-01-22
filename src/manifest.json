@@ -6,8 +6,8 @@
 	"name": "CodeMirror 6 snippets",
 	"description": "Exposes CodeMirror 6's built-in support for autocompletion and snippets.",
 	"author": "Henry Heino",
-	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-draw",
-	"repository_url": "https://github.com/personalizedrefrigerator/joplin-draw",
+	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
+	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
 	"keywords": ["snippets", "autocomplete", "suggestions"],
 	"categories": ["editor"]
 }

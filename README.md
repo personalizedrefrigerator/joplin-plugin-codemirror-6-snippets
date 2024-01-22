@@ -93,7 +93,11 @@ keybindings:
 	"previousSuggestion": ["ArrowUp"],
 	"nextSuggestionPage": ["PageDown"],
 	"previousSuggestionPage": ["PageUp"],
-	"closeCompletion": ["Escape"]
+	"closeCompletion": ["Escape"],
+
+	"nextSnippetField": ["Tab"],
+	"prevSnippetField": ["Shift-Tab"],
+	"clearSnippet": ["Escape"]
 }
 ```
 

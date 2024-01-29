@@ -1,3 +1,7 @@
+# 0.0.4
+
+- Fix keybindings when there is no snippet configuration file.
+
 # 0.0.3
 
 - Support overriding snippet keybindings (e.g. next snippet field, previous snippet field).

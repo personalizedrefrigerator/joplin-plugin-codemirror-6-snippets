@@ -9,5 +9,15 @@
 	"homepage_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
 	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
 	"keywords": ["snippets", "autocomplete", "suggestions"],
-	"categories": ["editor"]
+	"categories": ["editor", "productivity"],
+	"screenshots": [
+		{
+			"src": "screenshots/screenshot-light.png",
+			"label": "An autocompletion menu is shown, showing an 'inline math' autocompletion and information about it."
+		},
+		{
+			"src": "screenshots/screenshot-dark.png",
+			"label": "An autocompletion menu is shown, containing an HTML tag autocompletion. The snippet code for the autocompletion is also shown: '<${1:tag}>${2:content}</${1:tag}>${}'"
+		}
+	]
 }

@@ -56,6 +56,17 @@ This is a comment.
 $#{math-here}$ #{}
 ```
 
+# html-tag
+
+Creates an HTML tag with no attributes.
+
+```html
+<${1:tag}>${2:content}</${1:tag}>${}
+```
+
+Above, the `1:tag` means that _that_ part of the snippet template should be filled in first (and
+both `1:tag`s at the same time).
+
 # example-2
 
 Use more than three backticks to include triple backticks in the snippet
@@ -84,6 +95,7 @@ For example,
 Keybinding overrides go at the beginning of the note.
 
 keybindings:
+
 ```json
 {
 	"acceptCompletion": ["Tab"],
@@ -115,6 +127,7 @@ To disable a command, map it to the empty array:
 
 ````markdown
 keybindings:
+
 ```json
 {
 	"closeCompletion": []

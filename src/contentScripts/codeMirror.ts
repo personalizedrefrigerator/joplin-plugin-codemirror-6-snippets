@@ -3,6 +3,7 @@ import {
 	autocompletion,
 	clearSnippet,
 	closeCompletion,
+	completeFromList,
 	moveCompletionSelection,
 	nextSnippetField,
 	prevSnippetField,
@@ -10,9 +11,10 @@ import {
 	snippetKeymap,
 	startCompletion,
 } from '@codemirror/autocomplete';
-import { EditorState, Compartment, Prec } from '@codemirror/state';
+import { Compartment, Prec } from '@codemirror/state';
 import { Command, EditorView, KeyBinding, keymap } from '@codemirror/view';
 import { PluginConfig } from '../types';
+import { CodeMirrorContentScriptModule, ContentScriptContext } from 'api/types';
 
 const keymapFromConfig = (config: PluginConfig) => {
 	const commandNameToCompletionCommand: Record<string, Command> = {
@@ -82,17 +84,23 @@ const keymapFromConfig = (config: PluginConfig) => {
 	return [Prec.high(keymap.of(autocompleteBindings)), snippetKeymap.of(snippetBindings)];
 };
 
-export default (pluginContext: { contentScriptId: string; postMessage: any; onMessage: any }) => {
+export default (pluginContext: ContentScriptContext): CodeMirrorContentScriptModule => {
 	return {
-		plugin: async (codeMirror: any, _options: any) => {
+		plugin: async (codeMirror) => {
 			if (!codeMirror.cm6) {
 				throw new Error('Only CodeMirror 6 is supported');
 			}
 
 			const editor = codeMirror.cm6 as EditorView;
 
+			const joplinExtensions = codeMirror.joplinExtensions;
+
 			const extensions = new Compartment();
-			codeMirror.addExtension([autocompletion({ defaultKeymap: false }), extensions.of([])]);
+			codeMirror.addExtension([
+				joplinExtensions.enableLanguageDataAutocomplete.of(true),
+				autocompletion({ defaultKeymap: false }),
+				extensions.of([]),
+			]);
 
 			const loadConfig = async () => {
 				const config: PluginConfig = await pluginContext.postMessage('getConfiguration');
@@ -105,8 +113,8 @@ export default (pluginContext: { contentScriptId: string; postMessage: any; onMe
 				editor.dispatch({
 					effects: [
 						extensions.reconfigure([
+							joplinExtensions.completionSource(completeFromList(snippets)),
 							keymapFromConfig(config),
-							EditorState.languageData.of(() => [{ autocomplete: snippets }]),
 						]),
 					],
 				});
@@ -117,6 +125,5 @@ export default (pluginContext: { contentScriptId: string; postMessage: any; onMe
 
 			loadConfig();
 		},
-		codeMirrorResources: [],
 	};
 };

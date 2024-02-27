@@ -1,3 +1,7 @@
+# 0.0.5
+
+- Make it possible to fix autocomplete conflicts with other plugins (use Joplin APIs for autocomplete).
+
 # 0.0.4
 
 - Fix keybindings when there is no snippet configuration file.

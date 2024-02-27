@@ -1,4 +1,5 @@
 import {
+	Completion,
 	acceptCompletion,
 	autocompletion,
 	clearSnippet,
@@ -11,7 +12,7 @@ import {
 	snippetKeymap,
 	startCompletion,
 } from '@codemirror/autocomplete';
-import { Compartment, Prec } from '@codemirror/state';
+import { Compartment, EditorState, Prec } from '@codemirror/state';
 import { Command, EditorView, KeyBinding, keymap } from '@codemirror/view';
 import { PluginConfig } from '../types';
 import { CodeMirrorContentScriptModule, ContentScriptContext } from 'api/types';
@@ -93,7 +94,14 @@ export default (pluginContext: ContentScriptContext): CodeMirrorContentScriptMod
 
 			const editor = codeMirror.cm6 as EditorView;
 
-			const joplinExtensions = codeMirror.joplinExtensions;
+			const joplinExtensions = codeMirror.joplinExtensions ?? {
+				// Mock the autocomplete extensions so we can continue supporting older versions
+				// of Joplin (including the Android version, which has a lower version number than
+				// desktop for the same functionality).
+				completionSource: (completion: Completion) =>
+					EditorState.languageData.of(() => [{ autocomplete: completion }]),
+				enableLanguageDataAutocomplete: { of: () => [] },
+			};
 
 			const extensions = new Compartment();
 			codeMirror.addExtension([

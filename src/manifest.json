@@ -11,13 +11,16 @@
 	"keywords": ["snippets", "autocomplete", "suggestions"],
 	"categories": ["editor", "productivity"],
 	"platforms": ["desktop", "mobile"],
+	"icons": {
+		"128": "icons/icon-128.png"
+	},
 	"screenshots": [
 		{
-			"src": "screenshots/screenshot-light.png",
+			"src": "images/screenshot-light.png",
 			"label": "An autocompletion menu is shown, showing an 'inline math' autocompletion and information about it."
 		},
 		{
-			"src": "screenshots/screenshot-dark.png",
+			"src": "images/screenshot-dark.png",
 			"label": "An autocompletion menu is shown, containing an HTML tag autocompletion. The snippet code for the autocompletion is also shown: '<${1:tag}>${2:content}</${1:tag}>${}'"
 		}
 	]

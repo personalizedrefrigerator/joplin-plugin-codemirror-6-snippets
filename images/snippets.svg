@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128mm"
+   height="128mm"
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="snippets.svg"
+   inkscape:export-filename="icon-128.png"
+   inkscape:export-xdpi="25.4"
+   inkscape:export-ydpi="25.4"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="0.64610728"
+     inkscape:cx="366.81215"
+     inkscape:cy="232.15959"
+     inkscape:window-width="1440"
+     inkscape:window-height="831"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid132" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient892">
+      <stop
+         style="stop-color:#3c3c3c;stop-opacity:1;"
+         offset="0"
+         id="stop890" />
+      <stop
+         style="stop-color:#313131;stop-opacity:1;"
+         offset="1"
+         id="stop888" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2887">
+      <stop
+         style="stop-color:#0000ff;stop-opacity:0.20132741;"
+         offset="0"
+         id="stop2883" />
+      <stop
+         style="stop-color:#0000ff;stop-opacity:0;"
+         offset="1"
+         id="stop2885" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1738"
+       x="-0.06681997"
+       y="-0.089093294"
+       width="1.1336399"
+       height="1.1781866">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.767945"
+         id="feGaussianBlur1740" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2887"
+       id="linearGradient2889"
+       x1="21.166666"
+       y1="84.666664"
+       x2="103.1875"
+       y2="84.666664"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter3893"
+       x="-0.33518864"
+       y="-0.67037721"
+       width="1.6703773"
+       height="2.3407544">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.4780887"
+         id="feGaussianBlur3895" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient892"
+       id="linearGradient896"
+       x1="29.104166"
+       y1="124.35416"
+       x2="66.145836"
+       y2="0"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:url(#linearGradient896);stroke-width:0.499999;fill-opacity:1"
+       id="rect1128"
+       width="128.32292"
+       height="128.32292"
+       x="0"
+       y="-3.5527137e-15"
+       rx="14.552089"
+       ry="15.875" />
+    <g
+       id="g1744"
+       transform="matrix(1.4999999,0,0,1.6111113,-11.906246,-22.342598)">
+      <rect
+         style="fill:#929292;fill-opacity:0.67053;stroke-width:0.369274;filter:url(#filter1738)"
+         id="rect1182"
+         width="63.5"
+         height="47.625"
+         x="18.520834"
+         y="34.395832"
+         ry="2.5065789"
+         rx="2.6458359" />
+      <rect
+         style="fill:#ececec;stroke-width:0.369274"
+         id="rect946"
+         width="63.5"
+         height="47.625"
+         x="18.520834"
+         y="34.395832"
+         ry="2.5065789"
+         rx="2.6458359" />
+    </g>
+    <rect
+       style="fill:url(#linearGradient2889);fill-opacity:1;stroke-width:0.499999"
+       id="rect1922"
+       width="82.020836"
+       height="15.875"
+       x="21.166666"
+       y="76.729164"
+       rx="2.6458333"
+       ry="15.875" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.0424px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#333333;fill-opacity:0.67053;stroke-width:0.710431"
+       x="20.723564"
+       y="60.59853"
+       id="text1800"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.0424px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#333333;stroke-width:0.710432"
+         x="20.723564"
+         y="60.59853"
+         id="tspan1860">Md Editor</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.6109px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#000000;fill-opacity:0.67053;stroke-width:0.692441"
+       x="20.419176"
+       y="89.453117"
+       id="text1866"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.6109px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#000000;stroke-width:0.692442"
+         x="20.419176"
+         y="89.453117"
+         id="tspan1864">Snippets</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.6109px;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';fill:#000000;stroke-width:0.692442"
+         x="20.419176"
+         y="110.21674"
+         id="tspan1868" /></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:0.900662;stroke-width:0.353553"
+       id="rect3569"
+       width="2.6458328"
+       height="23.8125"
+       x="87.3125"
+       y="3.9687502"
+       rx="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.0791px;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.795331"
+       x="15.510734"
+       y="25.227299"
+       id="text3729"
+       transform="scale(1.0027769,0.99723081)"><tspan
+         sodipodi:role="line"
+         id="tspan3727"
+         style="stroke-width:0.795333;-inkscape-font-specification:'Ubuntu Bold';font-family:Ubuntu;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal"
+         x="15.510734"
+         y="25.227299">Snippet</tspan></text>
+    <path
+       style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.499999"
+       d="m 87.312499,34.395833 5.291667,-5.291667 5.291666,5.291667 z"
+       id="path3835" />
+    <path
+       style="fill:#e6e6e6;fill-opacity:0.5;stroke-width:0.499999;filter:url(#filter3893)"
+       d="m 87.312499,34.395833 5.291667,-5.291667 5.291666,5.291667 z"
+       id="path3891" />
+  </g>
+</svg>

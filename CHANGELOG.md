@@ -1,6 +1,7 @@
-# 0.0.6 and 0.0.7
+# 0.0.6, 0.0.7, 0.0.8
 
 - Mark mobile as supported.
+- Publish with [NPM verified provenance](https://docs.npmjs.com/generating-provenance-statements).
 
 # 0.0.5
 

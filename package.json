@@ -43,8 +43,7 @@
 		"webpack-cli": "^5.1.4",
 		"@codemirror/autocomplete": "6.12.0",
 		"@codemirror/state": "6.4.0",
-		"@codemirror/view": "6.23.0",
-		"@joplin/lib": "~2.9"
+		"@codemirror/view": "6.23.0"
 	},
 	"dependencies": {}
 }

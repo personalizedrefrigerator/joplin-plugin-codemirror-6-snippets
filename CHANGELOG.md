@@ -1,4 +1,4 @@
-# 0.0.6
+# 0.0.6 and 0.0.7
 
 - Mark mobile as supported.
 

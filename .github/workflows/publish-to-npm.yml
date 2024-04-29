@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: publishing
     permissions:
-      contents: read
+      # contents: write is necessary to allow uploading release artifacts.
+      contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v4

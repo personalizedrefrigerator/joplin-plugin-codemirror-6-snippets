@@ -1,3 +1,7 @@
+# 0.0.6
+
+- Mark mobile as supported.
+
 # 0.0.5
 
 - Make it possible to fix autocomplete conflicts with other plugins (use Joplin APIs for autocomplete).

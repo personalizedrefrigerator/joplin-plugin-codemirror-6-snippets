@@ -10,6 +10,7 @@
 	"repository_url": "https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets",
 	"keywords": ["snippets", "autocomplete", "suggestions"],
 	"categories": ["editor", "productivity"],
+	"platforms": ["desktop", "mobile"],
 	"screenshots": [
 		{
 			"src": "screenshots/screenshot-light.png",

@@ -21,7 +21,7 @@ describe('keybindingsFromNoteBody', () => {
 			'```',
 		].join('\n');
 
-		expect(keybindingsFromNoteBody(note)).toMatchObject({
+		expect(keybindingsFromNoteBody(note)).toEqual({
 			testCommand: ['Tab'],
 			foo: [],
 		});
@@ -39,6 +39,24 @@ describe('keybindingsFromNoteBody', () => {
 			'```',
 		].join('\n');
 
-		expect(Object.keys(keybindingsFromNoteBody(note))).toMatchObject([]);
+		expect(Object.keys(keybindingsFromNoteBody(note))).toEqual([]);
+	});
+
+	test('should allow activateOnTyping to map to a boolean', () => {
+		const note = [
+			'[toc]',
+			'',
+			'keybindings:',
+			'```json',
+			'{',
+			'  "activateOnTyping": false',
+			'}',
+			'```',
+			'',
+		].join('\n');
+
+		expect(keybindingsFromNoteBody(note)).toEqual({
+			activateOnTyping: false,
+		});
 	});
 });

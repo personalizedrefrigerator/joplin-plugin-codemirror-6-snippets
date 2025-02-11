@@ -74,7 +74,7 @@ joplin.plugins.register({
 				const noteBody: string = configNote?.body ?? '';
 
 				let snippets: SnippetSpec[] = [];
-				let keybindings: Record<string, string> = {};
+				let keybindings: Record<string, string[] | boolean> = {};
 
 				try {
 					keybindings = keybindingsFromNoteBody(noteBody);

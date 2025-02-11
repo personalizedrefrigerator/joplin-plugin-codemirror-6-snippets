@@ -52,6 +52,11 @@ const keymapFromConfig = (config: PluginConfig) => {
 	const keymapData = { ...defaultMapping, ...config.keymap };
 
 	for (const [commandName, mappings] of Object.entries(keymapData)) {
+		// Handled elsewhere
+		if (commandName === 'activateOnTyping') {
+			continue;
+		}
+
 		if (!Array.isArray(mappings)) {
 			console.warn('User snippet config: Mappings for', commandName, 'must be an array.');
 			continue;
@@ -106,7 +111,6 @@ export default (pluginContext: ContentScriptContext): CodeMirrorContentScriptMod
 			const extensions = new Compartment();
 			codeMirror.addExtension([
 				joplinExtensions.enableLanguageDataAutocomplete.of(true),
-				autocompletion({ defaultKeymap: false }),
 				extensions.of([]),
 			]);
 
@@ -118,10 +122,13 @@ export default (pluginContext: ContentScriptContext): CodeMirrorContentScriptMod
 					return snippetCompletion(snippet.snippet, { label: snippet.label, info: snippet.info });
 				});
 
+				const activateOnTyping = !!(config.keymap?.activateOnTyping ?? true);
+
 				editor.dispatch({
 					effects: [
 						extensions.reconfigure([
 							joplinExtensions.completionSource(completeFromList(snippets)),
+							autocompletion({ defaultKeymap: false, activateOnTyping }),
 							keymapFromConfig(config),
 						]),
 					],

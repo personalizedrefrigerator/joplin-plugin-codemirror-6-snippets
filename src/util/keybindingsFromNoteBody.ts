@@ -1,4 +1,4 @@
-const keybindingsFromNoteBody = (body: string): Record<string, string> => {
+const keybindingsFromNoteBody = (body: string): Record<string, string[] | boolean> => {
 	const keybindingJSON: string[] = [];
 	let lastLineWasKeybindingsHeader = false;
 	let inKeybindings = false;
@@ -46,6 +46,15 @@ const keybindingsFromNoteBody = (body: string): Record<string, string> => {
 
 	// Validate
 	for (const key in parsedJSON) {
+		if (key === 'activateOnTyping') {
+			if (typeof parsedJSON[key] !== 'boolean') {
+				throw new Error(
+					'Error in keymap JSON: activateOnTyping must map to either true or false. For example, { "activateOnTyping": true }',
+				);
+			}
+			continue;
+		}
+
 		if (!Array.isArray(parsedJSON[key])) {
 			throw new Error(
 				[

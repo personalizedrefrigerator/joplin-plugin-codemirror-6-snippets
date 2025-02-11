@@ -6,5 +6,5 @@ export interface SnippetSpec {
 
 export interface PluginConfig {
 	userSnippets: SnippetSpec[];
-	keymap: Record<string, string>;
+	keymap: Record<string, string[] | boolean>;
 }

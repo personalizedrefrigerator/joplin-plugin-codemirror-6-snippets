@@ -1,3 +1,7 @@
+# 0.1.0
+
+- Support an `activateOnTyping` setting in the `keybindings` override JSON (https://github.com/personalizedrefrigerator/joplin-plugin-codemirror-6-snippets/issues/3).
+
 # 0.0.6, 0.0.7, 0.0.8
 
 - Mark mobile as supported.

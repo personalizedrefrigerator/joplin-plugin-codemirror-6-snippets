@@ -134,3 +134,20 @@ keybindings:
 }
 ```
 ````
+
+## Disable showing snippets automatically
+
+By default, snippets are shown automatically. To disable this, add `"activateOnTyping": false` to the `keybindings` JSON:
+````markdown
+keybindings:
+
+```json
+{
+	"activateOnTyping": false,
+	"startCompletion": ["Ctrl-Space"]
+}
+```
+````
+
+Above, the `startCompletion` entry customizes the shortcut for showing the snippets menu.
+
